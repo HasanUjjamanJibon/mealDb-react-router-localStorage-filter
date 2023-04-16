@@ -7,7 +7,9 @@ const Root = () => {
   return (
     <div className="container mx-auto">
       <Header></Header>
-      <Outlet></Outlet>
+      <div className="min-h-[calc(100vh-20px)]">
+        <Outlet></Outlet>
+      </div>
       <Footer></Footer>
     </div>
   );
