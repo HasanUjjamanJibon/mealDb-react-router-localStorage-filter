@@ -1,50 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import SingleRow from "./SingleRow";
+import { Link } from "react-router-dom";
 
-const Summary = () => {
+const Summary = ({ MealsArray, handleRemoveFromStorage, handleRemoveAll }) => {
+  const [mealsArr, setMealsArr] = useState(MealsArray);
+
+  useEffect(() => {
+    const previousMealdata = JSON.parse(localStorage.getItem("meals"));
+    setMealsArr(previousMealdata);
+  }, [MealsArray]);
+
+  let counter = 1;
+
   return (
-    <div className="h-[200px] w-full bg-slate-300">
+    <div className="h-[200px] sticky top-0 w-full bg-slate-300">
       <h2>Cart Item : </h2>
       <div className="my-6">
         <div className="overflow-x-auto">
-          <table className="table table-zebra w-full">
+          <table className="table table-zebra w-full min-h-[200px]">
             {/* head */}
             <thead>
               <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Job</th>
-                <th>Favorite Color</th>
+                <th>Sl.</th>
+                <th>Image</th>
+                <th>Titile</th>
+                <th>remarks</th>
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>Blue</td>
-              </tr>
-              {/* row 2 */}
-              <tr>
-                <th>2</th>
-                <td>Hart Hagerty</td>
-                <td>Desktop Support Technician</td>
-                <td>Purple</td>
-              </tr>
-              {/* row 3 */}
-              <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-              </tr>
+              {mealsArr?.map((meal) => (
+                <SingleRow
+                  meal={meal}
+                  handleRemoveFromStorage={handleRemoveFromStorage}
+                  counter={counter++}
+                ></SingleRow>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
       <div>
-        <button className="btn btn-success block w-full">View Basket</button>
-        <button className="btn btn-error w-full">Clear Item</button>
+        <Link to="/baskets" className="btn btn-success block w-full">
+          View Basket
+        </Link>
+        <button onClick={handleRemoveAll} className="btn btn-error w-full">
+          Clear Item
+        </button>
       </div>
     </div>
   );

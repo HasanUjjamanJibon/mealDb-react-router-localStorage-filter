@@ -1,19 +1,29 @@
 import React from "react";
 
-const SingleProducts = () => {
+const SingleProducts = ({ meal, handleAddToStorage }) => {
+  const { idMeal, strMeal, strMealThumb, strCategory, strTags } = meal;
   return (
     <div className="card w-full bg-base-100 shadow-xl">
       <figure>
         <img
-          src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          src={strMealThumb}
+          className="h-48 object-fill w-full "
           alt="Shoes"
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <h2 className="card-title">{strMeal}</h2>
+        <h3>Category : {strCategory}</h3>
+        <h3>Tags : #{strTags}</h3>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+          <button
+            onClick={() =>
+              handleAddToStorage(idMeal, strMealThumb, strMeal, strCategory)
+            }
+            className="btn btn-primary"
+          >
+            Buy Now
+          </button>
         </div>
       </div>
     </div>
